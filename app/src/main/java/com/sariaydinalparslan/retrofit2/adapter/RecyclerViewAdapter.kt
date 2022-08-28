@@ -4,19 +4,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.sariaydinalparslan.countrylist.util.downloadfromUrl
+import com.sariaydinalparslan.countrylist.util.placeholderProgressBar
 import com.sariaydinalparslan.retrofit2.R
 import com.sariaydinalparslan.retrofit2.model.Result
 import kotlinx.android.synthetic.main.row_layout.view.*
 
 
-class RecyclerViewAdapter(private val cryptoList : ArrayList<Result>) : RecyclerView.Adapter<RecyclerViewAdapter.RowHolder>() {
+class RecyclerViewAdapter(private val apiList : ArrayList<Result>) : RecyclerView.Adapter<RecyclerViewAdapter.RowHolder>() {
     class RowHolder(view: View) : RecyclerView.ViewHolder(view) {
-        fun bind(cryptoModel: Result, position: Int){
-            itemView.text1.text =cryptoModel.name
-            itemView.text2.text =cryptoModel.gender
-            itemView.text3.text =cryptoModel.created
-            itemView.text4.text =cryptoModel.status
-            itemView.text5.text =cryptoModel.name
+        fun bind(apiModel: Result, position: Int){
+            itemView.text1.text =apiModel.name
+            itemView.text2.text =apiModel.gender
+            itemView.text3.text =apiModel.created
+            itemView.text4.text =apiModel.status
+            itemView.text5.text =apiModel.origin.name
+            itemView.imageview.downloadfromUrl(apiModel.image, placeholderProgressBar(itemView.context))
         }
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RowHolder {
@@ -24,9 +27,9 @@ class RecyclerViewAdapter(private val cryptoList : ArrayList<Result>) : Recycler
         return RowHolder(view)
     }
     override fun onBindViewHolder(holder: RowHolder, position: Int) {
-        holder.bind(cryptoList[position],position)
+        holder.bind(apiList[position],position)
     }
     override fun getItemCount(): Int {
-        return cryptoList.size
+        return apiList.size
     }
 }

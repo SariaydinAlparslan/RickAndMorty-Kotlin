@@ -20,15 +20,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
         val layoutManager : RecyclerView.LayoutManager = LinearLayoutManager(this)
         reycylerView.layoutManager = layoutManager
-        tumKısıler()
+        downloadList()
     }
-
-    fun tumKısıler(){
-        val kdi = ApiUtills.getKisilerDaoInterface()
-        kdi.tumKısıler().enqueue(object : Callback<CharactersCevap> {
+    fun downloadList(){
+        val daoI = ApiUtills.getDaoInterface()
+        daoI.downloadFromAPI().enqueue(object : Callback<CharactersCevap> {
             override fun onResponse(call: Call<CharactersCevap>, response: Response<CharactersCevap>) {
                 if (response.isSuccessful){
                     val cryptoModels = response.body()!!.results
